@@ -8,27 +8,52 @@
 
 import Foundation
 
-class DarkSky {
-    
-    func downloadWeather(onSuccess passWeatherToCaller: @escaping (_ weather: Weather) -> Void) {
-        let session = URLSession.shared
-        let baseURL = URL(string: "https://api.darksky.net/forecast/")
-        let apiKey = "2c8e2d3d4cf1360a04149677b746cb17"
-        let coordinates = ["latitude" : "45.5122", "longitude" : "122.6587"]
-        let location = coordinates["latitude"]! + "," + coordinates["longitude"]!
+protocol DarkSkyDelegate: AnyObject {
+    func darkSkyDidDownload(_ weather: Weather)
+}
 
-        let finalURL = baseURL?.appendingPathComponent(apiKey).appendingPathComponent(location)
-        let downloadTask = session.dataTask(with: finalURL!) { (data, response, error) in
-            if let data = data {
-                let decoder = JSONDecoder()
-                do {
-                    let weather = try decoder.decode(Weather.self, from: data)
-                    passWeatherToCaller(weather)
-                } catch {
-                    print(error)
-                }
-            }
+class DarkSky {
+    private let session = URLSession.shared
+    private let baseURL = URL(string: "https://api.darksky.net/forecast/2c8e2d3d4cf1360a04149677b746cb17")!
+    
+    weak var delegate: DarkSkyDelegate?
+    private var weather: Weather?
+}
+
+// MARK: - Networking
+extension DarkSky {
+    
+    public func downloadWeather() {
+        let finalURL = assembleFinalURL()
+        let downloadTask = session.dataTask(with: finalURL) { (data, response, error) in
+            self.decodeWeatherData(data)
+            self.sendDecodedWeatherToDelegate()
         }
         downloadTask.resume()
+    }
+}
+
+// MARK: - Helper methods
+extension DarkSky {
+
+    private func assembleFinalURL() -> URL {
+        let coordinates = Location(latitude: 45.5122, longitude: 122.6587).coordinatesAsString
+        return baseURL.appendingPathComponent(coordinates)
+    }
+    
+    private func decodeWeatherData(_ data: Data?) {
+        guard let data = data else { return }
+        let decoder = JSONDecoder()
+        do {
+            self.weather = try decoder.decode(Weather.self, from: data)
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func sendDecodedWeatherToDelegate() {
+        if let weather = self.weather {
+            self.delegate?.darkSkyDidDownload(weather)
+        }
     }
 }

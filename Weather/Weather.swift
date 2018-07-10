@@ -8,7 +8,7 @@
 
 import Foundation
 
-fileprivate struct RawServerResponse: Decodable {
+fileprivate class RawServerResponse: Decodable {
     struct Weather: Decodable {
         let currently: Currently
     }
