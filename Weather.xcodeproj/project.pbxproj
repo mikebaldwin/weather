@@ -15,6 +15,7 @@
 		9E25E45820F3CBD30048EB21 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E25E45720F3CBD30048EB21 /* WeatherTests.swift */; };
 		9EA23FEA20F51543000A0650 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FE920F51543000A0650 /* Weather.swift */; };
 		9EA23FEC20F515FB000A0650 /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FEB20F515FB000A0650 /* DarkSky.swift */; };
+		9EA23FEE20F53BC6000A0650 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FED20F53BC6000A0650 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		9E25E45920F3CBD30048EB21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EA23FE920F51543000A0650 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		9EA23FEB20F515FB000A0650 /* DarkSky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
+		9EA23FED20F53BC6000A0650 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,12 +85,13 @@
 			children = (
 				9E25E44220F3CBD20048EB21 /* AppDelegate.swift */,
 				9E25E44920F3CBD30048EB21 /* Assets.xcassets */,
+				9EA23FEB20F515FB000A0650 /* DarkSky.swift */,
 				9E25E44E20F3CBD30048EB21 /* Info.plist */,
 				9E25E44B20F3CBD30048EB21 /* LaunchScreen.storyboard */,
+				9EA23FED20F53BC6000A0650 /* Location.swift */,
 				9E25E44620F3CBD20048EB21 /* Main.storyboard */,
 				9EA23FE920F51543000A0650 /* Weather.swift */,
 				9E25E44420F3CBD20048EB21 /* WeatherViewController.swift */,
-				9EA23FEB20F515FB000A0650 /* DarkSky.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			files = (
 				9E25E44520F3CBD20048EB21 /* WeatherViewController.swift in Sources */,
 				9EA23FEC20F515FB000A0650 /* DarkSky.swift in Sources */,
+				9EA23FEE20F53BC6000A0650 /* Location.swift in Sources */,
 				9EA23FEA20F51543000A0650 /* Weather.swift in Sources */,
 				9E25E44320F3CBD20048EB21 /* AppDelegate.swift in Sources */,
 			);
