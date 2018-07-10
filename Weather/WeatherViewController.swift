@@ -19,7 +19,7 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         let darkSky = DarkSky()
         darkSky.delegate = self
-        darkSky.downloadWeather()
+        darkSky.fetchWeather()
     }
 
     func updateLabelsOnMainQueue() {

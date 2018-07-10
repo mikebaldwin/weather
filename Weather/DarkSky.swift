@@ -23,9 +23,10 @@ class DarkSky {
 // MARK: - Networking
 extension DarkSky {
     
-    public func downloadWeather() {
+    public func fetchWeather() {
         let finalURL = assembleFinalURL()
         let downloadTask = session.dataTask(with: finalURL) { (data, response, error) in
+            self.validateResponse(response)
             self.decodeWeatherData(data)
             self.sendDecodedWeatherToDelegate()
         }
