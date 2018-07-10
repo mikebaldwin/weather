@@ -18,6 +18,10 @@ class DarkSky {
     
     weak var delegate: DarkSkyDelegate?
     private var weather: Weather?
+}
+
+// MARK: - Networking
+extension DarkSky {
     
     public func downloadWeather() {
         let finalURL = assembleFinalURL()
@@ -27,7 +31,11 @@ class DarkSky {
         }
         downloadTask.resume()
     }
-    
+}
+
+// MARK: - Helper methods
+extension DarkSky {
+
     private func assembleFinalURL() -> URL {
         let coordinates = Location(latitude: 45.5122, longitude: 122.6587).coordinatesAsString
         return baseURL.appendingPathComponent(coordinates)
