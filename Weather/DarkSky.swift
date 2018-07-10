@@ -23,9 +23,10 @@ class DarkSky {
 // MARK: - Networking
 extension DarkSky {
     
-    public func downloadWeather() {
+    public func fetchWeather() {
         let finalURL = assembleFinalURL()
         let downloadTask = session.dataTask(with: finalURL) { (data, response, error) in
+            self.validateResponse(response)
             self.decodeWeatherData(data)
             self.sendDecodedWeatherToDelegate()
         }
@@ -41,13 +42,24 @@ extension DarkSky {
         return baseURL.appendingPathComponent(coordinates)
     }
     
+    private func validateResponse(_ response: URLResponse?) {
+        guard let response = response as? HTTPURLResponse else {
+            print("URLResponse could not be cast to HTTPURLResponse")
+            return
+        }
+        guard response.statusCode == 200 else {
+            print("HTTP response was unsuccessful. Status code: \(response.statusCode)")
+            return
+        }
+    }
+    
     private func decodeWeatherData(_ data: Data?) {
         guard let data = data else { return }
         let decoder = JSONDecoder()
         do {
             self.weather = try decoder.decode(Weather.self, from: data)
         } catch {
-            print(error)
+            print("Unable to decode weather data: \(error.localizedDescription)")
         }
     }
     

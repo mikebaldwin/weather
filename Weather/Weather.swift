@@ -9,6 +9,11 @@
 import Foundation
 
 fileprivate class RawServerResponse: Decodable {
+    
+    var roundedTempWithoutDecimals: Int {
+        return Int(round(currently.temperature))
+    }
+    
     struct Weather: Decodable {
         let currently: Currently
     }
@@ -28,7 +33,6 @@ struct Weather: Decodable {
     init(from decoder: Decoder) throws {
         let rawServerResponse = try RawServerResponse(from: decoder)
         summary = rawServerResponse.currently.summary
-        let roundedTemp = Int(round(rawServerResponse.currently.temperature))
-        temperature = String(roundedTemp) + "º"
+        temperature = "\(rawServerResponse.roundedTempWithoutDecimals)º"
     }
 }

@@ -13,13 +13,13 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    private var darkSky = DarkSky()
     private var weather: Weather?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let darkSky = DarkSky()
         darkSky.delegate = self
-        darkSky.downloadWeather()
+        darkSky.fetchWeather()
     }
 
     func updateLabelsOnMainQueue() {
