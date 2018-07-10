@@ -59,7 +59,7 @@ extension DarkSky {
         do {
             self.weather = try decoder.decode(Weather.self, from: data)
         } catch {
-            print(error)
+            print("Unable to decode weather data: \(error.localizedDescription)")
         }
     }
     
