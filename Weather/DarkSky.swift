@@ -8,18 +8,22 @@
 
 import Foundation
 
+protocol DarkSkyDelegate: AnyObject {
+    func darkSkyDidDownload(_ weather: Weather)
+}
+
 class DarkSky {
     private let session = URLSession.shared
     private let baseURL = URL(string: "https://api.darksky.net/forecast/2c8e2d3d4cf1360a04149677b746cb17")!
     
-    func downloadWeather(onSuccess passWeatherToCaller: @escaping (_ weather: Weather) -> Void) {
+    weak var delegate: DarkSkyDelegate?
+    
+    func downloadWeather() {
         let finalURL = assembleFinalURL()
         let downloadTask = session.dataTask(with: finalURL) { (data, response, error) in
-            if let data = data {
-                if let weather = self.decodeWeatherData(data) {
-                    passWeatherToCaller(weather)
-                }
-            }
+            guard let data = data else { return }
+            guard let weather = self.decodeWeatherData(data) else { return }
+            self.delegate?.darkSkyDidDownload(weather)
         }
         downloadTask.resume()
     }

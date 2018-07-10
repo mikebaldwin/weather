@@ -18,10 +18,8 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let darkSky = DarkSky()
-        darkSky.downloadWeather(onSuccess: { (weather) in
-            self.weather = weather
-            self.updateLabelsOnMainQueue()
-        })
+        darkSky.delegate = self
+        darkSky.downloadWeather()
     }
 
     func updateLabelsOnMainQueue() {
@@ -33,3 +31,10 @@ class WeatherViewController: UIViewController {
     }
 }
 
+extension WeatherViewController: DarkSkyDelegate {
+
+    func darkSkyDidDownload(_ weather: Weather) {
+        self.weather = weather
+        updateLabelsOnMainQueue()
+    }
+}
