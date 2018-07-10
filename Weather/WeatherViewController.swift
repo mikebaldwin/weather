@@ -10,32 +10,26 @@ import UIKit
 
 class WeatherViewController: UIViewController {
 
+    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    
+    private var weather: Weather?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        downloadWeatherData()
+        let darkSky = DarkSky()
+        darkSky.downloadWeather(onSuccess: { (weather) in
+            self.weather = weather
+            self.updateLabelsOnMainQueue()
+        })
     }
 
-    func downloadWeatherData() {
-        let session = URLSession.shared
-        let baseURL = URL(string: "https://api.darksky.net/forecast/")
-        let apiKey = "2c8e2d3d4cf1360a04149677b746cb17"
-        let coordinates = ["latitude" : "45.5122", "longitude" : "122.6587"]
-        let location = coordinates["latitude"]! + "," + coordinates["longitude"]!
-        let finalURL = baseURL?.appendingPathComponent(apiKey).appendingPathComponent(location)
-        
-        let downloadTask = session.dataTask(with: finalURL!) { (data, response, error) in
-            if let data = data {
-                print("data: ")
-                print(data)
-                print("\n")
-            }
-            if let response = response {
-                print("response:")
-                print(response)
-            }
+    func updateLabelsOnMainQueue() {
+        guard let weather = weather else { return }
+        DispatchQueue.main.async {
+            self.summaryLabel.text = weather.summary
+            self.temperatureLabel.text = weather.temperature
         }
-        downloadTask.resume()
     }
-
 }
 
