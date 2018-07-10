@@ -17,13 +17,13 @@ class DarkSky {
     private let baseURL = URL(string: "https://api.darksky.net/forecast/2c8e2d3d4cf1360a04149677b746cb17")!
     
     weak var delegate: DarkSkyDelegate?
+    private var weather: Weather?
     
-    func downloadWeather() {
+    public func downloadWeather() {
         let finalURL = assembleFinalURL()
         let downloadTask = session.dataTask(with: finalURL) { (data, response, error) in
-            guard let data = data else { return }
-            guard let weather = self.decodeWeatherData(data) else { return }
-            self.delegate?.darkSkyDidDownload(weather)
+            self.decodeWeatherData(data)
+            self.sendDecodedWeatherToDelegate()
         }
         downloadTask.resume()
     }
@@ -33,14 +33,19 @@ class DarkSky {
         return baseURL.appendingPathComponent(coordinates)
     }
     
-    private func decodeWeatherData(_ data: Data) -> Weather? {
+    private func decodeWeatherData(_ data: Data?) {
+        guard let data = data else { return }
         let decoder = JSONDecoder()
         do {
-            let weather = try decoder.decode(Weather.self, from: data)
-            return weather
+            self.weather = try decoder.decode(Weather.self, from: data)
         } catch {
             print(error)
         }
-        return nil
+    }
+    
+    private func sendDecodedWeatherToDelegate() {
+        if let weather = self.weather {
+            self.delegate?.darkSkyDidDownload(weather)
+        }
     }
 }
