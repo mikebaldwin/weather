@@ -42,6 +42,17 @@ extension DarkSky {
         return baseURL.appendingPathComponent(coordinates)
     }
     
+    private func validateResponse(_ response: URLResponse?) {
+        guard let response = response as? HTTPURLResponse else {
+            print("URLResponse could not be cast to HTTPURLResponse")
+            return
+        }
+        guard response.statusCode == 200 else {
+            print("HTTP response was unsuccessful. Status code: \(response.statusCode)")
+            return
+        }
+    }
+    
     private func decodeWeatherData(_ data: Data?) {
         guard let data = data else { return }
         let decoder = JSONDecoder()
