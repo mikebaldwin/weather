@@ -7,27 +7,34 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController {
 
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    private let locationManager = CLLocationManager()
     private var darkSky = DarkSky()
     private var weather: Weather?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startLocationManager()
         darkSky.delegate = self
         darkSky.fetchWeather()
     }
 
-    func updateLabelsOnMainQueue() {
+    private func updateLabelsOnMainQueue() {
         guard let weather = weather else { return }
         DispatchQueue.main.async {
             self.summaryLabel.text = weather.summary
             self.temperatureLabel.text = weather.temperature
         }
+    }
+    
+    private func startLocationManager() {
+        locationManager.requestWhenInUseAuthorization()
     }
 }
 

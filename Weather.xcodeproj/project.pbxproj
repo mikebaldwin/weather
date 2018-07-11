@@ -16,6 +16,7 @@
 		9EA23FEA20F51543000A0650 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FE920F51543000A0650 /* Weather.swift */; };
 		9EA23FEC20F515FB000A0650 /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FEB20F515FB000A0650 /* DarkSky.swift */; };
 		9EA23FEE20F53BC6000A0650 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FED20F53BC6000A0650 /* Location.swift */; };
+		9ECF0BB020F58E750065AE34 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ECF0BAF20F58E750065AE34 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		9EA23FE920F51543000A0650 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		9EA23FEB20F515FB000A0650 /* DarkSky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
 		9EA23FED20F53BC6000A0650 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		9ECF0BAF20F58E750065AE34 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ECF0BB020F58E750065AE34 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +71,7 @@
 				9E25E44120F3CBD20048EB21 /* Weather */,
 				9E25E45620F3CBD30048EB21 /* WeatherTests */,
 				9E25E44020F3CBD20048EB21 /* Products */,
+				9ECF0BAE20F58E750065AE34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +107,14 @@
 				9E25E45920F3CBD30048EB21 /* Info.plist */,
 			);
 			path = WeatherTests;
+			sourceTree = "<group>";
+		};
+		9ECF0BAE20F58E750065AE34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9ECF0BAF20F58E750065AE34 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
