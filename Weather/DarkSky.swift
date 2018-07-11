@@ -54,7 +54,10 @@ extension DarkSky {
     }
     
     private func decodeWeatherData(_ data: Data?) {
-        guard let data = data else { return }
+        guard let data = data else {
+            print("Unable to unrap data object")
+            return
+        }
         let decoder = JSONDecoder()
         do {
             self.weather = try decoder.decode(Weather.self, from: data)
