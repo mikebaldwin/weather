@@ -26,8 +26,8 @@ extension DarkSky {
     public func fetchWeather() {
         let finalURL = assembleFinalURL()
         let downloadTask = session.dataTask(with: finalURL) { (data, response, error) in
-            self.validateResponse(response)
-            self.decodeWeatherData(data)
+            self.validate(response)
+            self.decodeWeather(data)
             self.sendDecodedWeatherToDelegate()
         }
         downloadTask.resume()
@@ -42,7 +42,7 @@ extension DarkSky {
         return baseURL.appendingPathComponent(coordinates)
     }
     
-    private func validateResponse(_ response: URLResponse?) {
+    private func validate(_ response: URLResponse?) {
         guard let response = response as? HTTPURLResponse else {
             print("URLResponse could not be cast to HTTPURLResponse")
             return
@@ -53,7 +53,7 @@ extension DarkSky {
         }
     }
     
-    private func decodeWeatherData(_ data: Data?) {
+    private func decodeWeather(_ data: Data?) {
         guard let data = data else {
             print("Unable to unrap data object")
             return
