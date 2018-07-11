@@ -18,13 +18,22 @@ class WeatherViewController: UIViewController {
     private var darkSky = DarkSky()
     private var weather: Weather?
     
+}
+
+// MARK: - View lifecycle
+extension WeatherViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         startLocationManager()
         darkSky.delegate = self
         darkSky.fetchWeather()
     }
+}
 
+// MARK: - Private methods
+extension WeatherViewController {
+    
     private func updateLabelsOnMainQueue() {
         guard let weather = weather else { return }
         DispatchQueue.main.async {
@@ -38,6 +47,7 @@ class WeatherViewController: UIViewController {
     }
 }
 
+// MARK: - DarkSkyDelegate
 extension WeatherViewController: DarkSkyDelegate {
 
     func darkSkyDidDownload(_ weather: Weather) {
