@@ -26,11 +26,11 @@ fileprivate class RawServerResponse: Decodable {
     var currently: Currently
 }
 
-struct Weather: Decodable {
+class Weather: Decodable {
     var summary: String
     var temperature: String
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let rawServerResponse = try RawServerResponse(from: decoder)
         summary = rawServerResponse.currently.summary
         temperature = "\(rawServerResponse.roundedTempWithoutDecimals)º"

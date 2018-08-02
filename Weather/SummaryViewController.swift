@@ -9,19 +9,19 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController {
+class SummaryViewController: UIViewController {
 
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
     private let locationManager = CLLocationManager()
-    private var darkSky = DarkSky()
+    private var darkSky = DarkSkyRouter()
     private var weather: Weather?
     
 }
 
 // MARK: - View lifecycle
-extension WeatherViewController {
+extension SummaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ extension WeatherViewController {
 }
 
 // MARK: - Private methods
-extension WeatherViewController {
+extension SummaryViewController {
     
     private func updateLabelsOnMainQueue() {
         guard let weather = weather else { return }
@@ -48,7 +48,7 @@ extension WeatherViewController {
 }
 
 // MARK: - DarkSkyDelegate
-extension WeatherViewController: DarkSkyDelegate {
+extension SummaryViewController: DarkSkyRouterDelegate {
 
     func darkSkyDidDownload(_ weather: Weather) {
         self.weather = weather
@@ -57,7 +57,7 @@ extension WeatherViewController: DarkSkyDelegate {
 }
 
 // MARK: - Location management
-extension WeatherViewController: CLLocationManagerDelegate {
+extension SummaryViewController: CLLocationManagerDelegate {
     
     func startReceivingLocationChanges() {
         guard verifyUserAuthorizedLocationServices() == true else { return }

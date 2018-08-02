@@ -9,22 +9,22 @@
 import Foundation
 import CoreLocation
 
-protocol DarkSkyDelegate: AnyObject {
+protocol DarkSkyRouterDelegate: AnyObject {
     func darkSkyDidDownload(_ weather: Weather)
 }
 
-class DarkSky {
+class DarkSkyRouter {
     var location: CLLocation?
     
     private let session = URLSession.shared
     private let baseURL = URL(string: "https://api.darksky.net/forecast/2c8e2d3d4cf1360a04149677b746cb17")!
     
-    weak var delegate: DarkSkyDelegate?
+    weak var delegate: DarkSkyRouterDelegate?
     private var weather: Weather?
 }
 
 // MARK: - Networking
-extension DarkSky {
+extension DarkSkyRouter {
     
     public func fetchWeather() {
         let finalURL = assembleFinalURL()
@@ -38,7 +38,7 @@ extension DarkSky {
 }
 
 // MARK: - Helper methods
-extension DarkSky {
+extension DarkSkyRouter {
 
     private func assembleFinalURL() -> URL {
         if let location = location {
