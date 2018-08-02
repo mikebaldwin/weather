@@ -15,7 +15,7 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     
     private let locationManager = CLLocationManager()
-    private var darkSky = DarkSky()
+    private var darkSky = DarkSkyRouter()
     private var weather: Weather?
     
 }
@@ -48,7 +48,7 @@ extension SummaryViewController {
 }
 
 // MARK: - DarkSkyDelegate
-extension SummaryViewController: DarkSkyDelegate {
+extension SummaryViewController: DarkSkyRouterDelegate {
 
     func darkSkyDidDownload(_ weather: Weather) {
         self.weather = weather
