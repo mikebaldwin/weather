@@ -31,6 +31,36 @@ extension SummaryViewController {
     }
 }
 
+// MARK: - Navigation
+extension SummaryViewController {
+    
+    private enum Segues {
+        static let showDetails = "showDetails"
+        static let unwindToSummaryViewController = "unwindToSummaryViewController"
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case Segues.showDetails:
+            passHourlyForecastToDetailView(segue)
+        default:
+            return
+        }
+    }
+    
+    private func passHourlyForecastToDetailView(_ segue: UIStoryboardSegue) {
+        let navController = segue.destination as! UINavigationController
+        let destination = navController.viewControllers.first as! DetailViewController
+        if let forecast = forecast {
+            destination.hours = forecast.todaysHourly
+        }
+    }
+
+    @IBAction func unwindToSummaryViewController(segue: UIStoryboardSegue) {
+        
+    }
+}
+
 // MARK: - Private methods
 extension SummaryViewController {
     
