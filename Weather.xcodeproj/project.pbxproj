@@ -102,10 +102,10 @@
 				9E25E44920F3CBD30048EB21 /* Assets.xcassets */,
 				9EA23FEB20F515FB000A0650 /* DarkSkyRouter.swift */,
 				9E1EE60A2113A6C70018996F /* DetailViewController.swift */,
-				9E1EE60E2114A8F70018996F /* Models */,
 				9E25E44E20F3CBD30048EB21 /* Info.plist */,
 				9E25E44B20F3CBD30048EB21 /* LaunchScreen.storyboard */,
 				9E25E44620F3CBD20048EB21 /* Main.storyboard */,
+				9E1EE60E2114A8F70018996F /* Models */,
 				9E25E44420F3CBD20048EB21 /* SummaryViewController.swift */,
 			);
 			path = Weather;

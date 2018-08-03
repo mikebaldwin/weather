@@ -9,7 +9,7 @@
 import Foundation
 
 class Hour: Decodable {
-    var time: Int
+    var time: String
     var summary: String
     var icon: String
     var chanceOfPrecipitation: String
@@ -18,10 +18,10 @@ class Hour: Decodable {
     var feelsLikeTemperature: String
     var humidity: String
     var uvIndex: String
-
+    
     required init(from decoder: Decoder) throws {
         let rawServerResponse = try RawServerResponse(from: decoder)
-        time = rawServerResponse.time // TODO: convert to date object
+        time = Hour.formattedHourFrom(rawServerResponse.time)
         summary = rawServerResponse.summary
         icon = rawServerResponse.icon
         chanceOfPrecipitation = String(Int(round(rawServerResponse.chanceOfPrecipitation))) + "%"
@@ -30,6 +30,13 @@ class Hour: Decodable {
         feelsLikeTemperature = String(Int(round(rawServerResponse.feelsLikeTemperature))) + "º"
         humidity = String(Int(round(rawServerResponse.humidity))) + "%"
         uvIndex = String(rawServerResponse.uvIndex)
+    }
+    
+    private static func formattedHourFrom(_ timeStamp: Int) -> String {
+        let date = Date(timeIntervalSince1970: Double(timeStamp))
+        let formatter = DateFormatter()
+        formatter.dateFormat = "ha"
+        return formatter.string(from: date)
     }
 }
 

@@ -51,7 +51,8 @@ extension DetailViewController {
     
     func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
         let hour = next12Hours[indexPath.row]
-        cell.textLabel?.text = hour.summary
+        cell.textLabel?.text = "\(hour.time) - \(hour.summary)"
+        cell.detailTextLabel?.text = hour.temperature
     }
 
 }
