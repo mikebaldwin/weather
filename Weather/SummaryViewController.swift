@@ -16,7 +16,7 @@ class SummaryViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     private var darkSky = DarkSkyRouter()
-    private var weather: Weather?
+    private var forecast: Forecast?
     
 }
 
@@ -35,10 +35,10 @@ extension SummaryViewController {
 extension SummaryViewController {
     
     private func updateLabelsOnMainQueue() {
-        guard let weather = weather else { return }
+        guard let forecast = forecast else { return }
         DispatchQueue.main.async {
-            self.summaryLabel.text = weather.summary
-            self.temperatureLabel.text = weather.temperature
+            self.summaryLabel.text = forecast.currentSummary
+            self.temperatureLabel.text = forecast.currentTemperature
         }
     }
     
@@ -50,8 +50,8 @@ extension SummaryViewController {
 // MARK: - DarkSkyDelegate
 extension SummaryViewController: DarkSkyRouterDelegate {
 
-    func darkSkyDidDownload(_ weather: Weather) {
-        self.weather = weather
+    func darkSkyDidDownload(_ forecast: Forecast) {
+        self.forecast = forecast
         updateLabelsOnMainQueue()
     }
 }

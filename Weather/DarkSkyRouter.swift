@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 protocol DarkSkyRouterDelegate: AnyObject {
-    func darkSkyDidDownload(_ weather: Weather)
+    func darkSkyDidDownload(_ forecast: Forecast)
 }
 
 class DarkSkyRouter {
@@ -20,7 +20,7 @@ class DarkSkyRouter {
     private let baseURL = URL(string: "https://api.darksky.net/forecast/2c8e2d3d4cf1360a04149677b746cb17")!
     
     weak var delegate: DarkSkyRouterDelegate?
-    private var weather: Weather?
+    private var forecast: Forecast?
 }
 
 // MARK: - Networking
@@ -68,17 +68,17 @@ extension DarkSkyRouter {
         }
         do {
             let decoder = JSONDecoder()
-            self.weather = try decoder.decode(Weather.self, from: data)
+            self.forecast = try decoder.decode(Forecast.self, from: data)
             return true
         } catch {
-            print("Unable to decode weather data: \(error.localizedDescription)")
+            print("Unable to decode forecast data: \(error.localizedDescription)")
             return false
         }
     }
     
     private func sendDecodedWeatherToDelegate() {
-        if let weather = self.weather {
-            self.delegate?.darkSkyDidDownload(weather)
+        if let forecast = self.forecast {
+            self.delegate?.darkSkyDidDownload(forecast)
         }
     }
 }
