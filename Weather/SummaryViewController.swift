@@ -52,7 +52,7 @@ extension SummaryViewController {
         let navController = segue.destination as! UINavigationController
         let destination = navController.viewControllers.first as! DetailViewController
         if let forecast = forecast {
-            destination.hours = forecast.todaysHourly
+            destination.next12Hours = forecast.next12Hours
         }
     }
 

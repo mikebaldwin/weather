@@ -10,7 +10,7 @@ import UIKit
 
 class DetailViewController: UITableViewController {
     
-    var hours: [Hour] = []
+    var next12Hours: [Hour] = []
 
 }
 
@@ -40,7 +40,7 @@ extension DetailViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return hours.count
+        return next12Hours.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,19 +50,8 @@ extension DetailViewController {
     }
     
     func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
-        let hour = hours[indexPath.row]
+        let hour = next12Hours[indexPath.row]
         cell.textLabel?.text = hour.summary
-    }
-
-}
-
-// MARK: - Navigation
-extension DetailViewController {
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
 
 }

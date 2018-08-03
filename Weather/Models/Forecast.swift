@@ -33,13 +33,17 @@ class Forecast: Decodable {
     var currentSummary: String
     var currentTemperature: String
     var todaysSummary: String
-    var todaysHourly: [Hour]
+    var next12Hours: [Hour]
     
     required init(from decoder: Decoder) throws {
         let rawServerResponse = try RawServerResponse(from: decoder)
+        let hourlyData = rawServerResponse.hourly.data
+        let desiredHours = 12
+
         currentSummary = rawServerResponse.currently.summary
         currentTemperature = "\(rawServerResponse.roundedTempWithoutDecimals)º"
         todaysSummary = rawServerResponse.hourly.summary
-        todaysHourly = rawServerResponse.hourly.data
+        next12Hours = Array(hourlyData.dropLast(hourlyData.count - desiredHours))
     }
+    
 }
