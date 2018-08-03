@@ -8,27 +8,6 @@
 
 import Foundation
 
-fileprivate class RawServerResponse: Decodable {
-    
-    var currently: Currently
-    var hourly: Hourly
-    var roundedTempWithoutDecimals: Int {
-        return Int(round(currently.temperature))
-    }
-    
-    struct Currently: Decodable {
-        let summary: String
-        let temperature: Double
-    }
-    
-    struct Hourly: Decodable {
-        let summary: String
-        let icon: String
-        let data: [Hour]
-    }
-    
-}
-
 class Forecast: Decodable {
     var currentSummary: String
     var currentTemperature: String
@@ -41,9 +20,27 @@ class Forecast: Decodable {
         let desiredHours = 12
 
         currentSummary = rawServerResponse.currently.summary
-        currentTemperature = "\(rawServerResponse.roundedTempWithoutDecimals)º"
+        currentTemperature = String(Int(round(rawServerResponse.currently.temperature))) + "º"
         todaysSummary = rawServerResponse.hourly.summary
         next12Hours = Array(hourlyData.dropLast(hourlyData.count - desiredHours))
+    }
+    
+}
+
+fileprivate struct RawServerResponse: Decodable {
+    
+    var currently: Currently
+    var hourly: Hourly
+    
+    struct Currently: Decodable {
+        let summary: String
+        let temperature: Double
+    }
+    
+    struct Hourly: Decodable {
+        let summary: String
+        let icon: String
+        let data: [Hour]
     }
     
 }
