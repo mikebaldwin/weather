@@ -18,7 +18,12 @@ class DarkSkyAPI {
     static let shared = DarkSkyAPI()
     var location: CLLocation?
     weak var delegate: DarkSkyAPIDelegate?
-    private var forecast: Forecast?    
+    
+    enum BackendError: Error {
+        case apiError(reason: Error)
+        case decodingError(reason: Error)
+        case invalidResponseData
+    }
 }
 
 // MARK: - Networking
@@ -26,8 +31,9 @@ extension DarkSkyAPI {
     
     func forecast(for location: CLLocation) {
         Alamofire.request(ForecastRouter.getForecast(location)).responseData { (responseData) in
-            guard self.decodeForecastJSON(responseData) == true else { return }
-            self.sendDecodedWeatherToDelegate()
+            if let forecast = try? self.decodeForecastJSON(responseData) {
+                self.delegate?.darkSkyDidDownload(forecast)
+            }
         }
     }
     
@@ -36,28 +42,19 @@ extension DarkSkyAPI {
 // MARK: - Helper methods
 extension DarkSkyAPI {
 
-    private func decodeForecastJSON(_ response: DataResponse<Data>) -> Bool {
+    private func decodeForecastJSON(_ response: DataResponse<Data>) throws -> Forecast {
         guard response.result.error == nil else {
-            print(response.result.error!)
-            return false
+            throw BackendError.apiError(reason: response.result.error!)
         }
         guard let responseData = response.result.value else {
-            print("didn't get any data from the API")
-            return false
+            throw BackendError.invalidResponseData
         }
         do {
             let decoder = JSONDecoder()
-            self.forecast = try decoder.decode(Forecast.self, from: responseData)
-            return true
+            let forecast = try decoder.decode(Forecast.self, from: responseData)
+            return forecast
         } catch {
-            print("Unable to decode forecast data: \(error.localizedDescription)")
-            return false
-        }
-    }
-    
-    private func sendDecodedWeatherToDelegate() {
-        if let forecast = self.forecast {
-            self.delegate?.darkSkyDidDownload(forecast)
+            throw BackendError.decodingError(reason: error)
         }
     }
 }
