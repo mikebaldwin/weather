@@ -13,9 +13,10 @@ class SummaryViewController: UIViewController {
 
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     
     private let locationManager = CLLocationManager()
-    private var darkSky = DarkSkyRouter()
+    private var darkSkyRouter = DarkSkyRouter()
     private var forecast: Forecast?
     
 }
@@ -27,7 +28,7 @@ extension SummaryViewController {
         super.viewDidLoad()
         startLocationManager()
         startReceivingLocationChanges()
-        darkSky.delegate = self
+        darkSkyRouter.delegate = self
     }
 }
 
@@ -64,7 +65,7 @@ extension SummaryViewController {
 // MARK: - Private methods
 extension SummaryViewController {
     
-    private func updateLabelsOnMainQueue() {
+    private func updateSummaryLabels() {
         guard let forecast = forecast else { return }
         DispatchQueue.main.async {
             self.summaryLabel.text = forecast.currentSummary
@@ -82,7 +83,7 @@ extension SummaryViewController: DarkSkyRouterDelegate {
 
     func darkSkyDidDownload(_ forecast: Forecast) {
         self.forecast = forecast
-        updateLabelsOnMainQueue()
+        updateSummaryLabels()
     }
 }
 
@@ -122,8 +123,29 @@ extension SummaryViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let latestLocation = locations.last!
-        darkSky.location = latestLocation
-        darkSky.fetchWeather()
+        darkSkyRouter.location = latestLocation
+        lookUpCurrentLocation { (placemark) in
+            self.locationLabel.text = placemark?.locality ?? ""
+        }
+        darkSkyRouter.fetchWeather()
+    }
+    
+    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void ) {
+        // Use the last reported location.
+        guard let lastLocation = self.locationManager.location else {
+            completionHandler(nil)
+            return
+        }
+        // Look up the location and pass it to the completion handler
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(lastLocation, completionHandler: { (placemarks, error) in
+            guard error == nil else {
+                completionHandler(nil)
+                return
+            }
+            let firstLocation = placemarks?.first
+            completionHandler(firstLocation)
+        })
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
