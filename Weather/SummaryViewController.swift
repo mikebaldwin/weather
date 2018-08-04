@@ -16,7 +16,7 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     
     private let locationManager = CLLocationManager()
-    private var darkSkyRouter = DarkSkyRouter()
+    private var darkSkyAPI = DarkSkyAPI.shared
     private var forecast: Forecast?
     
 }
@@ -28,8 +28,9 @@ extension SummaryViewController {
         super.viewDidLoad()
         startLocationManager()
         startReceivingLocationChanges()
-        darkSkyRouter.delegate = self
+        darkSkyAPI.delegate = self
     }
+    
 }
 
 // MARK: - Navigation
@@ -79,7 +80,7 @@ extension SummaryViewController {
 }
 
 // MARK: - DarkSkyDelegate
-extension SummaryViewController: DarkSkyRouterDelegate {
+extension SummaryViewController: DarkSkyAPIDelegate {
 
     func darkSkyDidDownload(_ forecast: Forecast) {
         self.forecast = forecast
@@ -123,11 +124,11 @@ extension SummaryViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let latestLocation = locations.last!
-        darkSkyRouter.location = latestLocation
+        darkSkyAPI.location = latestLocation
         lookUpCurrentLocation { (placemark) in
             self.locationLabel.text = placemark?.locality ?? ""
         }
-        darkSkyRouter.fetchWeather()
+        darkSkyAPI.forecast(for: latestLocation)
     }
     
     func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void ) {
