@@ -16,7 +16,6 @@ protocol DarkSkyAPIDelegate: AnyObject {
 
 class DarkSkyAPI {
     static let shared = DarkSkyAPI()
-    var location: CLLocation?
     weak var delegate: DarkSkyAPIDelegate?
     
     enum BackendError: Error {
