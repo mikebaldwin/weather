@@ -16,7 +16,7 @@ class SummaryViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     private var darkSky = DarkSkyRouter()
-    private var weather: Weather?
+    private var forecast: Forecast?
     
 }
 
@@ -31,14 +31,44 @@ extension SummaryViewController {
     }
 }
 
+// MARK: - Navigation
+extension SummaryViewController {
+    
+    private enum Segues {
+        static let showDetails = "showDetails"
+        static let unwindToSummaryViewController = "unwindToSummaryViewController"
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case Segues.showDetails:
+            passHourlyForecastToDetailView(segue)
+        default:
+            return
+        }
+    }
+    
+    private func passHourlyForecastToDetailView(_ segue: UIStoryboardSegue) {
+        let navController = segue.destination as! UINavigationController
+        let destination = navController.viewControllers.first as! DetailViewController
+        if let forecast = forecast {
+            destination.next12Hours = forecast.next12Hours
+        }
+    }
+
+    @IBAction func unwindToSummaryViewController(segue: UIStoryboardSegue) {
+        
+    }
+}
+
 // MARK: - Private methods
 extension SummaryViewController {
     
     private func updateLabelsOnMainQueue() {
-        guard let weather = weather else { return }
+        guard let forecast = forecast else { return }
         DispatchQueue.main.async {
-            self.summaryLabel.text = weather.summary
-            self.temperatureLabel.text = weather.temperature
+            self.summaryLabel.text = forecast.currentSummary
+            self.temperatureLabel.text = forecast.currentTemperature
         }
     }
     
@@ -50,8 +80,8 @@ extension SummaryViewController {
 // MARK: - DarkSkyDelegate
 extension SummaryViewController: DarkSkyRouterDelegate {
 
-    func darkSkyDidDownload(_ weather: Weather) {
-        self.weather = weather
+    func darkSkyDidDownload(_ forecast: Forecast) {
+        self.forecast = forecast
         updateLabelsOnMainQueue()
     }
 }
