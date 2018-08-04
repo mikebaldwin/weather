@@ -11,10 +11,12 @@ import CoreLocation
 
 class SummaryViewController: UIViewController {
 
+    // MARK: - IBOutlets
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
+    // MARK: - Instance Variables
     private let locationManager = CLLocationManager()
     private var darkSkyAPI = DarkSkyAPI.shared
     private var forecast: Forecast?
@@ -26,8 +28,9 @@ extension SummaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startLocationManager()
-        startReceivingLocationChanges()
+        verifyUserAuthorizedLocationServices()
+        configureLocationServices()
+        locationManager.startUpdatingLocation()
         darkSkyAPI.delegate = self
     }
     
@@ -63,6 +66,15 @@ extension SummaryViewController {
     }
 }
 
+// MARK: - IBActions
+extension SummaryViewController {
+    
+    @IBAction func refreshLocation(_ sender: Any) {
+        locationManager.requestLocation()
+    }
+
+}
+
 // MARK: - Private methods
 extension SummaryViewController {
     
@@ -72,10 +84,6 @@ extension SummaryViewController {
             self.summaryLabel.text = forecast.currentSummary
             self.temperatureLabel.text = forecast.currentTemperature
         }
-    }
-    
-    private func startLocationManager() {
-        locationManager.requestWhenInUseAuthorization()
     }
 }
 
@@ -91,61 +99,35 @@ extension SummaryViewController: DarkSkyAPIDelegate {
 // MARK: - Location management
 extension SummaryViewController: CLLocationManagerDelegate {
     
-    func startReceivingLocationChanges() {
-        guard verifyUserAuthorizedLocationServices() == true else { return }
-        guard verifyLocationServicesEnabled() == true else { return }
-        configureLocationServices()
-        locationManager.startUpdatingLocation()
-    }
-    
-    private func verifyUserAuthorizedLocationServices() -> Bool {
+    private func verifyUserAuthorizedLocationServices() {
         let authorizationStatus = CLLocationManager.authorizationStatus()
         if authorizationStatus != .authorizedWhenInUse && authorizationStatus != .authorizedAlways {
-            print("Location services not authorized")
-            return false
+            locationManager.requestWhenInUseAuthorization()
         }
-        return true
-    }
-    
-    private func verifyLocationServicesEnabled() -> Bool {
-        if CLLocationManager.locationServicesEnabled() == false {
-            print("Location services not enabled")
-            return false
-        }
-        return true
     }
     
     private func configureLocationServices() {
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.distanceFilter = 1000.0  // In meters.
         locationManager.pausesLocationUpdatesAutomatically = true
-        locationManager.delegate = self
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let latestLocation = locations.last!
-        darkSkyAPI.location = latestLocation
-        lookUpCurrentLocation { (placemark) in
-            self.locationLabel.text = placemark?.locality ?? ""
+        if let latestLocation = locations.last {
+            updateLocationNameLabel(from: latestLocation)
+            darkSkyAPI.forecast(for: latestLocation)
         }
-        darkSkyAPI.forecast(for: latestLocation)
     }
     
-    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void ) {
-        // Use the last reported location.
-        guard let lastLocation = self.locationManager.location else {
-            completionHandler(nil)
-            return
-        }
-        // Look up the location and pass it to the completion handler
+    func updateLocationNameLabel(from location: CLLocation) {
         let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(lastLocation, completionHandler: { (placemarks, error) in
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
             guard error == nil else {
-                completionHandler(nil)
                 return
             }
             let firstLocation = placemarks?.first
-            completionHandler(firstLocation)
+            self.locationLabel.text = firstLocation?.locality ?? ""
         })
     }
     
