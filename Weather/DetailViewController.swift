@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UITableViewController {
     
     var next12Hours: [Hour] = []
-
+    let cellHeight: CGFloat = 64.0
 }
 
 // MARK: - View lifecycle
@@ -53,6 +53,10 @@ extension DetailViewController {
         let hour = next12Hours[indexPath.row]
         cell.textLabel?.text = "\(hour.time) - \(hour.summary)"
         cell.detailTextLabel?.text = hour.temperature
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeight
     }
 
 }
