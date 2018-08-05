@@ -16,6 +16,9 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
+    @IBOutlet weak var detailsButton: UIButton!
+    @IBOutlet weak var refreshButton: UIButton!
+    
     // MARK: - Instance Variables
     private let locationManager = CLLocationManager()
     private var darkSkyAPI = DarkSkyAPI.shared
