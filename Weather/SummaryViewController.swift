@@ -12,9 +12,11 @@ import CoreLocation
 class SummaryViewController: UIViewController {
 
     // MARK: - IBOutlets
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var precipitationLabel: UILabel!
     
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
@@ -81,13 +83,31 @@ extension SummaryViewController {
 // MARK: - Private methods
 extension SummaryViewController {
     
-    private func updateSummaryLabels() {
+    private func updateSummaryDisplay() {
         guard let forecast = forecast else { return }
         DispatchQueue.main.async {
-            self.summaryLabel.text = forecast.currentSummary
-            self.temperatureLabel.text = forecast.currentTemperature
+            self.weatherIconImageView.image = UIImage(named: forecast.currentIcon)
+            self.summaryLabel.text = self.summaryMessage(for: forecast.currentSummary)
+            self.temperatureLabel.text = "and " + forecast.currentTemperature
+            self.precipitationLabel.text = "with a \(forecast.currentChanceOfPrecipitation) chance of precipitation"
         }
     }
+    
+    private func summaryMessage(for currentSummary: String) -> String {
+        var summary = currentSummary.lowercased()
+        switch summary {
+        case "rain", "snow", "sleet":
+            summary.append("ing")
+        case "drizzle":
+            summary = "drizzling"
+        case "fog":
+            summary.append("gy")
+        default:
+            break
+        }
+        return "It's " + summary
+    }
+    
 }
 
 // MARK: - DarkSkyDelegate
@@ -95,7 +115,7 @@ extension SummaryViewController: DarkSkyAPIDelegate {
 
     func darkSkyDidDownload(_ forecast: Forecast) {
         self.forecast = forecast
-        updateSummaryLabels()
+        updateSummaryDisplay()
     }
 }
 
@@ -129,8 +149,9 @@ extension SummaryViewController: CLLocationManagerDelegate {
             guard error == nil else {
                 return
             }
-            let firstLocation = placemarks?.first
-            self.locationLabel.text = firstLocation?.locality ?? ""
+            if let cityName = placemarks?.first?.locality {
+                self.locationLabel.text = "in " + cityName
+            }
         })
     }
     
