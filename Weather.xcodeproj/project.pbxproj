@@ -17,6 +17,7 @@
 		9E25E44820F3CBD20048EB21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E25E44620F3CBD20048EB21 /* Main.storyboard */; };
 		9E25E44A20F3CBD30048EB21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E25E44920F3CBD30048EB21 /* Assets.xcassets */; };
 		9E25E44D20F3CBD30048EB21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E25E44B20F3CBD30048EB21 /* LaunchScreen.storyboard */; };
+		9E7BF0312117D4DD00915873 /* HourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BF0302117D4DD00915873 /* HourCell.swift */; };
 		9E8B8FA5211659E1009BD2F3 /* SummaryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B8FA4211659E1009BD2F3 /* SummaryViewControllerTests.swift */; };
 		9EA23FEA20F51543000A0650 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FE920F51543000A0650 /* Forecast.swift */; };
 		9EA23FEC20F515FB000A0650 /* DarkSkyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA23FEB20F515FB000A0650 /* DarkSkyAPI.swift */; };
@@ -49,6 +50,7 @@
 		9E25E44E20F3CBD30048EB21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E25E45320F3CBD30048EB21 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E25E45920F3CBD30048EB21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E7BF0302117D4DD00915873 /* HourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourCell.swift; sourceTree = "<group>"; };
 		9E8B8FA4211659E1009BD2F3 /* SummaryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewControllerTests.swift; sourceTree = "<group>"; };
 		9EA23FE920F51543000A0650 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		9EA23FEB20F515FB000A0650 /* DarkSkyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyAPI.swift; sourceTree = "<group>"; };
@@ -123,7 +125,7 @@
 				9E08001A2115FCF600247418 /* API */,
 				9E25E44220F3CBD20048EB21 /* AppDelegate.swift */,
 				9E25E44920F3CBD30048EB21 /* Assets.xcassets */,
-				9E1EE60A2113A6C70018996F /* DetailViewController.swift */,
+				9E7BF02F2117D49E00915873 /* DetailViewController */,
 				9E25E44E20F3CBD30048EB21 /* Info.plist */,
 				9E25E44B20F3CBD30048EB21 /* LaunchScreen.storyboard */,
 				9E25E44620F3CBD20048EB21 /* Main.storyboard */,
@@ -140,6 +142,15 @@
 				9E8B8FA4211659E1009BD2F3 /* SummaryViewControllerTests.swift */,
 			);
 			path = WeatherTests;
+			sourceTree = "<group>";
+		};
+		9E7BF02F2117D49E00915873 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9E7BF0302117D4DD00915873 /* HourCell.swift */,
+				9E1EE60A2113A6C70018996F /* DetailViewController.swift */,
+			);
+			path = DetailViewController;
 			sourceTree = "<group>";
 		};
 		9ECF0BAE20F58E750065AE34 /* Frameworks */ = {
@@ -329,6 +340,7 @@
 				9E0800192115FCEA00247418 /* ForecastRouter.swift in Sources */,
 				9E1EE60B2113A6C70018996F /* DetailViewController.swift in Sources */,
 				9E1EE6102114AE040018996F /* Hour.swift in Sources */,
+				9E7BF0312117D4DD00915873 /* HourCell.swift in Sources */,
 				9EA23FEA20F51543000A0650 /* Forecast.swift in Sources */,
 				9E25E44320F3CBD20048EB21 /* AppDelegate.swift in Sources */,
 			);

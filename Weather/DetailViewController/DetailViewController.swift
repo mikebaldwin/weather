@@ -43,16 +43,18 @@ extension DetailViewController {
         return next12Hours.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.hourCell, for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> HourCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.hourCell,
+                                                 for: indexPath) as! HourCell
         configure(cell, at: indexPath)
         return cell
     }
     
-    func configure(_ cell: UITableViewCell, at indexPath: IndexPath) {
+    func configure(_ cell: HourCell, at indexPath: IndexPath) {
         let hour = next12Hours[indexPath.row]
-        cell.textLabel?.text = "\(hour.time) - \(hour.summary)"
-        cell.detailTextLabel?.text = hour.temperature
+        cell.iconImageView.image = UIImage(named: hour.icon)
+        cell.timeLabel.text = hour.time
+        cell.temperatureLabel.text = hour.temperature
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

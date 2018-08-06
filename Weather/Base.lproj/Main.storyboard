@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -122,29 +123,48 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="hourCell" textLabel="aWC-F7-kFh" detailTextLabel="7U5-kB-67Z" rowHeight="64" style="IBUITableViewCellStyleValue1" id="wS6-Wm-Zwr">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="hourCell" rowHeight="64" id="wS6-Wm-Zwr" customClass="HourCell" customModule="Weather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wS6-Wm-Zwr" id="yZM-Tg-sOc">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aWC-F7-kFh">
-                                            <rect key="frame" x="16" y="22" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MQY-ij-Tek">
+                                            <rect key="frame" x="20" y="16" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="gao-D7-d2c"/>
+                                                <constraint firstAttribute="width" constant="32" id="phs-KI-gyo"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euG-3H-IjH">
+                                            <rect key="frame" x="60" y="19.5" width="43" height="25.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7U5-kB-67Z">
-                                            <rect key="frame" x="260" y="22" width="44" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75º" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NaM-p6-7aB">
+                                            <rect key="frame" x="271.5" y="19" width="32.5" height="25.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="NaM-p6-7aB" firstAttribute="centerY" secondItem="yZM-Tg-sOc" secondAttribute="centerY" id="4Ye-u9-n4N"/>
+                                        <constraint firstItem="euG-3H-IjH" firstAttribute="centerY" secondItem="yZM-Tg-sOc" secondAttribute="centerY" id="MD2-6f-iS6"/>
+                                        <constraint firstItem="euG-3H-IjH" firstAttribute="leading" secondItem="MQY-ij-Tek" secondAttribute="trailing" constant="8" id="RUz-nT-BWj"/>
+                                        <constraint firstItem="NaM-p6-7aB" firstAttribute="trailing" secondItem="yZM-Tg-sOc" secondAttribute="trailingMargin" id="VXQ-KM-aHk"/>
+                                        <constraint firstItem="MQY-ij-Tek" firstAttribute="centerY" secondItem="yZM-Tg-sOc" secondAttribute="centerY" id="axB-SX-5o6"/>
+                                        <constraint firstItem="MQY-ij-Tek" firstAttribute="leading" secondItem="yZM-Tg-sOc" secondAttribute="leading" constant="20" symbolic="YES" id="qU7-Nv-efl"/>
+                                        <constraint firstItem="NaM-p6-7aB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="euG-3H-IjH" secondAttribute="trailing" constant="8" id="yWG-JX-6mJ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconImageView" destination="MQY-ij-Tek" id="x5v-Vg-CCm"/>
+                                    <outlet property="temperatureLabel" destination="NaM-p6-7aB" id="Qr1-Jo-tZP"/>
+                                    <outlet property="timeLabel" destination="euG-3H-IjH" id="nAU-aF-9uu"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
