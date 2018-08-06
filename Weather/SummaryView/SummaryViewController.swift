@@ -87,13 +87,13 @@ extension SummaryViewController {
         guard let forecast = forecast else { return }
         DispatchQueue.main.async {
             self.weatherIconImageView.image = UIImage(named: forecast.currentIcon)
-            self.summaryLabel.text = self.summaryMessage(for: forecast.currentSummary)
+            self.summaryLabel.text = self.formatSummaryAsSentence(forecast.currentSummary)
             self.temperatureLabel.text = "and " + forecast.currentTemperature
             self.precipitationLabel.text = "with a \(forecast.currentChanceOfPrecipitation) chance of precipitation"
         }
     }
     
-    private func summaryMessage(for currentSummary: String) -> String {
+    private func formatSummaryAsSentence(_ currentSummary: String) -> String {
         var summary = currentSummary.lowercased()
         switch summary {
         case "rain", "snow", "sleet":

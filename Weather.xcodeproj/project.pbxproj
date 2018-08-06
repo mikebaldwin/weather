@@ -125,12 +125,12 @@
 				9E08001A2115FCF600247418 /* API */,
 				9E25E44220F3CBD20048EB21 /* AppDelegate.swift */,
 				9E25E44920F3CBD30048EB21 /* Assets.xcassets */,
-				9E7BF02F2117D49E00915873 /* DetailViewController */,
+				9E7BF02F2117D49E00915873 /* DetailView */,
 				9E25E44E20F3CBD30048EB21 /* Info.plist */,
 				9E25E44B20F3CBD30048EB21 /* LaunchScreen.storyboard */,
 				9E25E44620F3CBD20048EB21 /* Main.storyboard */,
 				9E1EE60E2114A8F70018996F /* Models */,
-				9E25E44420F3CBD20048EB21 /* SummaryViewController.swift */,
+				9E4E05422118928800E86952 /* SummaryView */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -144,13 +144,21 @@
 			path = WeatherTests;
 			sourceTree = "<group>";
 		};
-		9E7BF02F2117D49E00915873 /* DetailViewController */ = {
+		9E4E05422118928800E86952 /* SummaryView */ = {
+			isa = PBXGroup;
+			children = (
+				9E25E44420F3CBD20048EB21 /* SummaryViewController.swift */,
+			);
+			path = SummaryView;
+			sourceTree = "<group>";
+		};
+		9E7BF02F2117D49E00915873 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
 				9E7BF0302117D4DD00915873 /* HourCell.swift */,
 				9E1EE60A2113A6C70018996F /* DetailViewController.swift */,
 			);
-			path = DetailViewController;
+			path = DetailView;
 			sourceTree = "<group>";
 		};
 		9ECF0BAE20F58E750065AE34 /* Frameworks */ = {

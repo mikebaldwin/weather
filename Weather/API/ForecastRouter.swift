@@ -12,7 +12,7 @@ import CoreLocation
 
 enum ForecastRouter: URLRequestConvertible {
     static let baseURLString = "https://api.darksky.net"
-    static let apiKey = "2c8e2d3d4cf1360a04149677b746cb17"
+    static let apiKey = "Your API Key here"
     
     case getForecast(CLLocation)
     
